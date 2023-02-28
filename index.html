@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+    <style type="text/css">
+        html {
+            background-color: bisque;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #22c4c7;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 150px;
+            height: 100px;
+        }
+
+        button:hover {
+            background-color: #fff;
+            color: #22c4c7;
+            border: 2px #22c4c7 solid;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="color: cornflowerblue; text-align: center; font-size: 50px;">ChooseClass</h1>
+    <span style="color: rgb(220, 100, 20); margin-left: 300px;">Live : </span>
+    <button onclick="choosew1()">w1</button>
+    <button onclick="choosew2()">w2</button>
+    <button onclick="choosew3()">w3</button>
+    <div id='enter'></div>
+    <span style="color: rgb(220, 100, 20);margin-left: 300px;">Book : </span>
+    <button onclick="chooseU5()">BookU5</button>
+    <div style="text-align:unset;"></div>
+    <h3 style="color: cornflowerblue;text-align: center;">This website is made by Harry.</h3>
+    </div>
+    <script>
+        var enter = '';
+        for (var i = 0; i < 4; i++) {
+            enter += '<br>';
+        }
+        document.getElementById('enter').innerHTML = enter;
+        function choosew1() {
+            window.open('w1.html', 'week1');
+        }
+        function choosew2() {
+            window.open('w2.html', 'week2');
+        }
+        function choosew3() {
+            window.open('w3.html');
+        }
+        function chooseU5() {
+            window.open('w4.html');
+        }
+    </script>
+</body>
+
+</html>

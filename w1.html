@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style type="text/css">
+        html {
+            background-color: antiquewhite;
+        }
+
+        .title {
+            color: tomato;
+            text-align: center;
+            font-size: 60px;
+        }
+
+        .title2 {
+            color: turquoise;
+            font-style: oblique;
+        }
+
+        .buton {
+            background-color: #cbf0cc;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        .buton:hover {
+            width: 100px;
+            height: 100px;
+            background-color: white;
+            border: 2px solid green;
+            border-radius: 0px;
+        }
+
+        .mid {
+            text-align: center;
+        }
+
+        .errshow {
+            color: rgb(8, 168, 61);
+            font-size: large;
+            text-align: left;
+        }
+    </style>
+    <title>test</title>
+</head>
+
+<body>
+    <h1 class="title">背單字</h1>
+    <input type="button" value="changeLanguage" onclick="changeLanguage()">
+    <article>
+        <div class="mid">
+            <input type="button" onclick="show()" class="buton	" value="start"></button>
+        </div>
+        <div>
+            <h1 style="color:steelblue">answer : </h1>
+            <div id="choice" style="color:steelblue"></div>
+        </div>
+    </article>
+    <aside>
+        <div id="showMistakeCt" class="errshow"></div>
+        <div id="err" class="errshow">
+            錯誤顯示 :
+        </div>
+    </aside>
+    <script>
+        var chooseClass;
+        var q = ["指導", "慈善事業", "極為疲憊的", "假裝,冒稱", "談論", "滿足的", "坦承", "人類", "局,處,署", "月亮的", "合夥關係"];
+        var ans = ["guidance", "charity", "exhausted", "assume", "remark", "content", "confess", "mankind", "angency", "lunar", "partnership"];
+        var ansshow = '';
+        for (var i = 0; i < ans.length; i++) {
+            if (i != ans.length - 1) {
+                ansshow += ans[i];
+                ansshow += ' , ';
+            }
+            else {
+                ansshow += ans[i];
+                ansshow += '<br>';
+            }
+        }
+        document.getElementById('choice').innerHTML = ansshow;
+        var change = 0;
+        function changeLanguage() {
+            if (change % 2 != 0) { //switchToCH
+                for (var i = 0; i < ans.length; i++) {
+                    var temp = ans[i];
+                    ans[i] = q[i];
+                    q[i] = temp;
+                }
+                change++;
+                alert("U have changed the language to CH");
+            }
+            else {
+                //switchBackToEN
+                for (var i = 0; i < ans.length; i++) {
+                    var temp = ans[i];
+                    ans[i] = q[i];
+                    q[i] = temp;
+                }
+                alert("U have changed the language to EN");
+                change++;
+            }
+        }
+        function show() {
+            var emerge = [];
+            for (var i = 0; i < q.length; i++) {
+                emerge.push(0);
+            }
+            function getRandom(x) {
+                var hold = Math.floor(Math.random() * x);
+                return check(hold);
+            }
+            function check(n) {
+                if (emerge[n]) {
+                    return getRandom(q.length - 1);
+                }
+                else {
+                    return n;
+                }
+            }
+            var rand = [];
+            for (var i = 0; i < q.length; i++) {
+                var k = getRandom(q.length);
+                rand.push(k);
+                emerge[k] = 1;
+            };
+            console.log(rand);
+            var number;
+            var mis = [];
+            for (var i = 0; i < q.length; i++) {
+                mis.push(0);
+            }
+            if (change % 2 == 0) { 				//EN
+                let input;
+                loop1:
+                for (var i = 0; i < q.length; ++i) {
+                    while (1) {
+                        input = prompt(q[rand[i]]);
+                        if (input == ans[rand[i]]) {
+                            break;
+                        }
+                        else if (input == "skip") {
+                            mis[rand[i]] = 1;
+                            break;
+                        }
+                        else if (input == "break") {
+                            break loop1;
+                        }
+                        else if (input == "skipall") {
+                            for (var i = 0; i < ans.length; i++) {
+                                mis[i] = 1;
+                            }
+                            break loop1;
+                        }
+                    }
+                }
+                var showerrQ = '';
+                var ct = 0;
+                for (var i = 0; i < q.length; i++) {
+                    if (mis[i]) {
+                        ct++;
+                        showerrQ += i + 1;
+                        showerrQ += '.  err = ';
+                        showerrQ += q[i];
+                        showerrQ += ',  ans = ';
+                        showerrQ += ans[i];
+                        showerrQ += '<br>';
+                    }
+                }
+                document.getElementById('showMistakeCt').innerHTML = 'mistake count : ' + ct + '/' + ans.length;
+                document.getElementById('err').innerHTML = "Q : " + '<br>' + showerrQ;
+            }
+            else {				//CH
+                let input;
+                loop1:
+                for (var i = 0; i < q.length; ++i) {
+                    while (1) {
+                        input = prompt(q[rand[i]]);
+                        if (input == "OK") {
+                            break;
+                        }
+                        else if (input == "skip") {
+                            mis[rand[i]] = 1;
+                            break;
+                        }
+                        else if (input == "break") {
+                            break loop1;
+                        }
+                        else if (input == "skipall") {
+                            for (var i = 0; i < ans.length; i++) {
+                                mis[i] = 1;
+                            }
+                            break loop1;
+                        }
+                    }
+                }
+                var showerrQ = '';
+                var ct = 0;
+                for (var i = 0; i < q.length; i++) {
+                    if (mis[i]) {
+                        ct++;
+                        showerrQ += i + 1;
+                        showerrQ += '.  err = ';
+                        showerrQ += q[i];
+                        showerrQ += ',  ans = ';
+                        showerrQ += ans[i];
+                        showerrQ += '<br>';
+                    }
+                }
+                document.getElementById('showMistakeCt').innerHTML = 'mistake count : ' + ct + '/' + ans.length;
+                document.getElementById('err').innerHTML = "Q : " + '<br>' + showerrQ;
+            }
+        }
+
+    </script>
+</body>
+
+</html>
